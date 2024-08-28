@@ -1,3 +1,5 @@
+package DP;
+
 public class Main {
    public static int[][] mutiple(int [][] a1,int [][] a2){
        int answer[][]=new int[a1.length][a2[0].length];
