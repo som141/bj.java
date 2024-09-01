@@ -5,12 +5,12 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main3 {
     public int sort[];
 
 
 
-    public Main(int lenth) {
+    public Main3(int lenth) {
         this.sort = new int[lenth];
     }
     public int bSeach(int index,int[]array){
@@ -35,7 +35,7 @@ public class Main {
 
         BufferedReader bufferedReader= new BufferedReader(new InputStreamReader(System.in));
         int num= Integer.parseInt(bufferedReader.readLine());
-        Main main3= new Main(num);
+        Main3 main3= new Main3(num);
         String st= bufferedReader.readLine();
         StringTokenizer stringTokenizer = new StringTokenizer(st," ");
         for(int i=0;i<num;i++){
