@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 class edge implements Comparable<edge>{
-//    간선 표현;
+
     int w;
     int cost;
 
@@ -51,12 +51,11 @@ public class ex1 {
     }
 
     public static void main(String[] args) throws IOException {
-        // 그래프 입력, 저장
+
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(bf.readLine());
         int m = Integer.parseInt(bf.readLine());
 
-        // 그래프 선언, 간선 리스트로 표현
         graph = new ArrayList[n + 1];
         for (int i = 0; i < graph.length; i++) graph[i] = new ArrayList<>();
 
@@ -68,10 +67,10 @@ public class ex1 {
             int cost = Integer.parseInt(st.nextToken());
 
             graph[v].add(new edge(w, cost));
-            graph[v].add(new edge(v, cost));
+            graph[w].add(new edge(v, cost));
         }
 
-        // 프림 알고리즘 수행
+
         prim(1, n);
     }
 }
