@@ -1,17 +1,23 @@
 package greedy;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringTokenizer;
 
 class unionFind{
     private int[] parent;
     private int[] rank;
 
+
+
     public unionFind(int n) {
-        parent = new int[n];
-        rank = new int[n];
-        for (int i = 0; i < n; i++) {
+        parent = new int[n+1];
+        rank = new int[n+1];
+        for (int i = 0; i <= n; i++) {
             parent[i] = i;
             rank[i] = 0;
         }
@@ -27,7 +33,6 @@ class unionFind{
         int rootY= find(y);
 
         if (rootX != rootY) {
-            // 랭크를 비교해 더 작은 트리를 큰 트리에 붙임
             if (rank[rootX] > rank[rootY]) {
                 parent[rootY] = rootX;
             } else if (rank[rootX] < rank[rootY]) {
@@ -59,9 +64,8 @@ class Edge implements Comparable<Edge>{
 
 public class kruskalEx{
 
-    public static int kruskal(int n, List<Edge> edges) {
-        // n: 정점의 수, edges: 간선 리스트
-        Collections.sort(edges); // 간선을 가중치 기준으로 정렬
+    public int kruskal(int n, List<Edge> edges) {
+        Collections.sort(edges);
         unionFind uf = new unionFind(n);
 
         int totalWeight = 0;
@@ -73,7 +77,6 @@ public class kruskalEx{
                 totalWeight += edge.cost;
                 edgeCount++;
 
-                // n-1개의 간선을 선택하면 MST 완성
                 if (edgeCount == n - 1) {
                     break;
                 }
@@ -83,16 +86,17 @@ public class kruskalEx{
         return totalWeight;
     }
 
-    public static void main(String[] args) {
-        int n = 4; // 정점의 수
-        List<Edge> edges = new ArrayList<>();
-        edges.add(new Edge(0, 1, 10));
-        edges.add(new Edge(0, 2, 6));
-        edges.add(new Edge(0, 3, 5));
-        edges.add(new Edge(1, 3, 15));
-        edges.add(new Edge(2, 3, 4));
-
-        int totalWeight = kruskal(n, edges);
-        System.out.println("Minimum Spanning Tree cost: " + totalWeight);
+    public static void main(String[] args) throws IOException {
+       kruskalEx kr= new kruskalEx();
+        BufferedReader bufferedReader= new BufferedReader(new InputStreamReader(System.in));
+        int num1= Integer.parseInt(bufferedReader.readLine());
+        List<Edge> edgeList = new ArrayList<>();
+        int num2= Integer.parseInt(bufferedReader.readLine());
+        for(int i=0;i<num2;i++){
+            String string=bufferedReader.readLine();
+            StringTokenizer stringTokenizer= new StringTokenizer(string," ");
+            edgeList.add(new Edge(Integer.parseInt(stringTokenizer.nextToken()),Integer.parseInt(stringTokenizer.nextToken()),Integer.parseInt(stringTokenizer.nextToken())));
+        }
+        System.out.println(kr.kruskal(num1,edgeList));
     }
 }
