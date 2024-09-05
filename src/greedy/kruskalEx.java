@@ -13,7 +13,6 @@ class unionFind{
     private int[] rank;
 
 
-
     public unionFind(int n) {
         parent = new int[n+1];
         rank = new int[n+1];
