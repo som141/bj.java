@@ -38,6 +38,8 @@ class Graph{
     }
 }
 public class Dstra {
+
+
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader= new BufferedReader(new InputStreamReader(System.in));
         String s= bufferedReader.readLine();
@@ -55,6 +57,7 @@ public class Dstra {
             graph.Graph[n1].add(new Graph.Edge(n2,n3));
         }
         int d[]=new int[num1+1];
+        int reversed[]= new int[num1+1];
         boolean b[]=new boolean[num1+1];
         PriorityQueue<Graph.Edge> pq= new PriorityQueue<>();
         Arrays.fill(d,Integer.MAX_VALUE);
@@ -76,7 +79,6 @@ public class Dstra {
                 }
             }
         }
-        Arrays.sort(d);
-        System.out.println(d[num1]);
+
     }
 }
