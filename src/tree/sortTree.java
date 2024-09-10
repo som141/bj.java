@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class sortTree {
+public class    sortTree {
     static int tree[];
     static public void preorder(int[]arr,int i){
         System.out.println(arr[i]);
