@@ -6,86 +6,75 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main1 {
-    PriorityQueue<Edge>[] graph;
-    PriorityQueue<Edge>[] graph1;
-    private int n;
-
-    public Main1(int n) {
-        this.n = n;
-        graph=new PriorityQueue[n+1];
-        for(int i=0;i<=n;i++){
-            graph[i]=new PriorityQueue<>();
-        }
-    }
+    static ArrayList<Integer>[] graph; // 그래프 인접 리스트
+    static boolean[] visited; // 방문 여부 체크 배열
 
     public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String s= bufferedReader.readLine();
-        StringTokenizer stringTokenizer = new StringTokenizer(s," ");
-        int num1= Integer.parseInt(stringTokenizer.nextToken());
-        int num2= Integer.parseInt(stringTokenizer.nextToken());
-        int num3= Integer.parseInt(stringTokenizer.nextToken());
-        Main1 main1 = new Main1(num1);
-        for(int i=1;i<=num2;i++){
-            String s1= bufferedReader.readLine();
-            StringTokenizer stringTokenizer1 = new StringTokenizer(s1," ");
-            int n1= Integer.parseInt(stringTokenizer1.nextToken());
-            int n2= Integer.parseInt(stringTokenizer1.nextToken());
-            main1.graph[n1].add(new Edge(n2));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken()); // 정점 개수
+        int M = Integer.parseInt(st.nextToken()); // 간선 개수
+        int V = Integer.parseInt(st.nextToken()); // 시작 정점 번호
+
+        // 그래프 초기화
+        graph = new ArrayList[N + 1];
+        for (int i = 1; i <= N; i++) {
+            graph[i] = new ArrayList<>();
         }
-        boolean visit1[]= new boolean[num1+1];
-        boolean visit2[]= new boolean[num1+1];
-        Arrays.fill(visit1,false);
-        Arrays.fill(visit2,false);
 
-        main1.dfs(num3,visit1);
-        System.out.println();
-        System.out.print(num3+" ");
-        main1.bfs(num3,visit2);
+        // 간선 정보 입력
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            graph[u].add(v);
+            graph[v].add(u); // 무방향 그래프이므로 양방향 추가
+        }
 
+        // 각 리스트 정렬 (정점 번호가 작은 것부터 방문하기 위함)
+        for (int i = 1; i <= N; i++) {
+            Collections.sort(graph[i]);
+        }
 
+        // DFS 탐색
+        visited = new boolean[N + 1]; // 방문 배열 초기화
+        dfs(V);
+        System.out.println(); // 줄바꿈
 
-
+        // BFS 탐색
+        visited = new boolean[N + 1]; // 방문 배열 초기화
+        bfs(V);
     }
-    public void dfs(int v,boolean[] visit){
-        visit[v]=true;
-        System.out.print(v+" ");
-        PriorityQueue<Edge> edges=new PriorityQueue<>(graph[v]);
-        while (!edges.isEmpty()){
-            int v1= edges.poll().v;
-            if (!visit[v1]){
-                dfs(v1,visit);
-            }
-        }
 
-    }
-    public void bfs(int v,boolean[] visit){
-        visit[v]=true;
-        for(Edge edge: graph[v]) {
-            int v1 = edge.v;
-            if (!visit[v1]) {
-                System.out.print(v1 + " ");
-            }
-        }
-        while(!graph[v].isEmpty()){
-            int v2= graph[v].poll().v;
-            if(!visit[v2]){
-                bfs(v2,visit);
+    // DFS 함수 (재귀로 구현)
+    public static void dfs(int v) {
+        visited[v] = true;
+        System.out.print(v + " "); // 현재 노드 출력
+
+        for (int nextV : graph[v]) {
+            if (!visited[nextV]) {
+                dfs(nextV); // 재귀 호출로 다음 노드 탐색
             }
         }
     }
 
-    static class Edge implements Comparable<Edge> {
-        int v;
+    // BFS 함수 (큐로 구현)
+    public static void bfs(int start) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(start);
+        visited[start] = true;
 
-        public Edge(int v) {
-            this.v = v;
-        }
+        while (!queue.isEmpty()) {
+            int v = queue.poll();
+            System.out.print(v + " "); // 현재 노드 출력
 
-
-        @Override
-        public int compareTo(Edge o) {
-            return this.v-o.v;
+            for (int nextV : graph[v]) {
+                if (!visited[nextV]) {
+                    visited[nextV] = true;
+                    queue.add(nextV); // 큐에 다음 노드 추가
+                }
+            }
         }
     }
 }
