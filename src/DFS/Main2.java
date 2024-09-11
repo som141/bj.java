@@ -20,7 +20,7 @@ public class Main2 {
             int num2 = Integer.parseInt(stringTokenizer.nextToken());
             int num3 = Integer.parseInt(stringTokenizer.nextToken());
             w= new int[num1][num2];
-            Queue<node> queue= new ArrayDeque<>();
+            Queue<node> queue= new PriorityQueue<>();
             for(int j=0;j<num3;j++){
                 String s1= bufferedReader.readLine();
                 StringTokenizer stringTokenizer1 = new StringTokenizer(s1," ");
@@ -55,7 +55,7 @@ public class Main2 {
         }
 
     }
-    static class node {
+    static class node implements Comparable<node>{
         int u;
         int v;
 
@@ -65,6 +65,10 @@ public class Main2 {
         }
 
 
+        @Override
+        public int compareTo(node o) {
+            return (this.u+this.v)-(o.u+o.v);
+        }
     }
 
 }
