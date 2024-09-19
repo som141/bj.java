@@ -55,6 +55,7 @@ public class Main19 {
         int answer=0;
         for(int i=1;i<=num;i++){
             answer=Math.max(answer,result[i]);
+            System.out.println(result[i]);
         }
 
         System.out.println(answer);
