@@ -6,35 +6,35 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 
 public class Main20 {
-    static int num;
-    static int []w;
-    static int []dp;
-
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        num= Integer.parseInt(bufferedReader.readLine());
-        w=new int[num+1];
-        dp=new int[num+1];
-        for(int i=1;i<=num;i++){
-            int k=Integer.parseInt(bufferedReader.readLine());
-            w[i]=k;
-        }
-        dp[0]=0;
-        dp[1]=0;
-        dp[2]=1;
-        for(int i=3;i<=num;i++){
-            Stack<Integer> stack=new Stack<>();
-            for(int j=1;j<i;j++){
-                if(w[i]<w[j]){
-                    stack.push(j);
+        int num = Integer.parseInt(bufferedReader.readLine()); // 사람의 수
+        Stack<int[]> stack = new Stack<>(); // 키와 그 키를 가진 사람 수를 저장할 스택
+        long pairCount = 0; // 서로 볼 수 있는 쌍의 수
+
+        for (int i = 0; i < num; i++) {
+            int height = Integer.parseInt(bufferedReader.readLine()); // 현재 사람의 키
+            int count = 1; // 현재 사람의 키와 같은 사람 수
+
+            // 스택이 비어 있지 않고, 현재 사람의 키가 스택의 마지막 사람의 키보다 크거나 같으면
+            while (!stack.isEmpty() && stack.peek()[0] <= height) {
+                pairCount += stack.peek()[1]; // 스택에 있는 사람들과 서로 볼 수 있음
+                if (stack.peek()[0] == height) { // 같은 키를 가진 사람을 만나면
+                    count += stack.pop()[1]; // 같은 키를 가진 사람 수를 합침
+                } else {
+                    stack.pop(); // 키가 작은 사람은 스택에서 제거
                 }
             }
-            int k1=1;
-            if(!stack.isEmpty()){
-                k1=stack.pop();
+
+            // 스택이 비어 있지 않으면, 현재 사람은 스택의 마지막 사람과 서로 볼 수 있음
+            if (!stack.isEmpty()) {
+                pairCount++;
             }
-            dp[i]=dp[i-1]+i-k1-1;
+
+
+            stack.push(new int[]{height, count});
         }
-        System.out.println(dp[num]);
+
+        System.out.println(pairCount);
     }
 }
