@@ -1,11 +1,11 @@
-package DP;
+package BF;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class Main19v1 {
+public class Main19 {
     static int num;;
     static int []indegree;
     static List<Integer>[] w;
@@ -13,9 +13,9 @@ public class Main19v1 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         num= Integer.parseInt(br.readLine());
-        indegree= new int[num+1];//남은 차수 표현
-        w=new ArrayList[num+1];//남은 우선 작업 표기
-        costs=new int[num+1];//배열별로 이작업이 끝나는 시기
+        indegree= new int[num+1];
+        w=new ArrayList[num+1];
+        costs=new int[num+1];
         for (int i = 1; i <= num; i++) {
             w[i] = new ArrayList<>();
         }
@@ -42,22 +42,20 @@ public class Main19v1 {
         }
 
         while(!pq.isEmpty()){
-            int currentV=pq.poll();
-            for (int next: w[currentV]) {
+            int current =pq.poll();
+
+            for (int next : w[current]){
                 indegree[next]--;
-                result[next]=Math.max(result[currentV]+costs[next],result[next]);
+                result[next]=Math.max(result[next],result[current]+costs[next]);
                 if(indegree[next]==0){
-                    pq.add(next);
-
-                }
+                pq.add(next);}
             }
-
         }
-
 
         int answer=0;
         for(int i=1;i<=num;i++){
             answer=Math.max(answer,result[i]);
+            System.out.println(result[i]);
         }
 
         System.out.println(answer);
