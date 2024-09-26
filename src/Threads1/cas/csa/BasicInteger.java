@@ -1,6 +1,6 @@
-package cas;
+package Threads1.cas.csa;
 
-public class BasicInteger implements IncrementInteger{
+public class BasicInteger implements IncrementInteger {
     private int value;
     @Override
     public void increment() {
