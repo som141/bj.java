@@ -6,12 +6,17 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main4 {
-    static List<Integer>[] graph;
+    static List<Integer>[] graph,reverseGraph;
     static int f;
     static int num;
     static int tastC;
     static int[]ingreed;
+    static boolean[] visited;
+    static Stack<Integer> stack;
     static int result;
+    static List<List<Integer>> sccs;
+    static int[] sccId;
+    static int sccCount;
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         f= Integer.parseInt(bufferedReader.readLine());
@@ -21,9 +26,13 @@ public class Main4 {
         num = Integer.parseInt(stringTokenizer.nextToken());
         tastC = Integer.parseInt(stringTokenizer.nextToken());
         graph = new ArrayList[num+1];
-        ingreed = new int[num+1];
+        reverseGraph = new ArrayList[num+1];
+        visited = new boolean[num+1];
+        stack = new Stack<>();
+        sccs = new ArrayList();
         for(int i=1;i<=num;i++){
             graph[i] = new ArrayList<>();
+            reverseGraph[i] = new ArrayList<>();
         }
         for(int i=1;i<=tastC;i++){
             String s = bufferedReader.readLine();
@@ -31,39 +40,65 @@ public class Main4 {
             int a = Integer.parseInt(stringTokenizer1.nextToken());
             int b = Integer.parseInt(stringTokenizer1.nextToken());
             graph[a].add(b);
-            ingreed[b]++;
+            reverseGraph[b].add(a);
         }
-        result = 0;
-        Queue<Integer> queue = new LinkedList<>();
-            boolean[] visited = new boolean[num + 1];
-            int result = 0;
-
-            // 진입 차수가 0인 도미노를 먼저 큐에 삽입
-            for (int i = 1; i <= num; i++) {
-                if (ingreed[i] == 0) {
-                    queue.offer(i);
-                    visited[i] = true;
-                    result++;  // 이 도미노는 손으로 넘어뜨려야 함
-                }
+        sccs = new ArrayList();
+        for(int i=1;i<num+1;i++){
+            if(!visited[i])dfs(i);
+        }
+        visited = new boolean[num+1];
+        sccId = new int[num+1];
+        sccCount = 0;
+        while(!stack.isEmpty()){
+            int s = stack.pop();
+            if(!visited[s]){
+                sccs.add(new ArrayList<>());
+                reverseDfs(s,sccCount++);
             }
+        }
+        ingreed=new int[sccCount+1];
+            boolean[][] sccEdges = new boolean[sccCount][sccCount];
 
-            // 위상 정렬 진행
-            while (!queue.isEmpty()) {
-                int current = queue.poll();
-
-                // 현재 도미노와 연결된 도미노들 처리
-                for (int neighbor : graph[current]) {
-                    ingreed[neighbor]--;
-                    if (ingreed[neighbor] == 0 && !visited[neighbor]) {
-                        queue.offer(neighbor);
-                        visited[neighbor] = true;
+            for (int i = 1; i <= num; i++) {
+                for (int neighbor : graph[i]) {
+                    if (sccId[i] != sccId[neighbor]) {
+                        if (!sccEdges[sccId[i]][sccId[neighbor]]) {
+                            ingreed[sccId[neighbor]]++;
+                            sccEdges[sccId[i]][sccId[neighbor]] = true;
+                        }
                     }
                 }
             }
-
+            result=0;
+            for(int i=1;i<=sccCount;i++){
+                if(ingreed[i]==0){
+                    result++;
+                }
+            }
             System.out.println(result);
         }
 
+
+
+    }
+    static void dfs(int node){
+        visited[node]=true;
+        for(int next:graph[node]){
+            if(!visited[next]){
+                dfs(next);
+            }
+        }
+        stack.push(node);
+    }
+    static void reverseDfs(int node,int sccCount){
+        visited[node]=true;
+        sccId[node]=sccCount;
+        sccs.get(sccCount).add(node);
+        for(int next:reverseGraph[node]){
+            if(!visited[next]){
+                reverseDfs(next,sccCount);
+            }
+        }
     }
 }
 

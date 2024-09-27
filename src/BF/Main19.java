@@ -8,13 +8,14 @@ import java.util.*;
 public class Main19 {
     static int num;;
     static int []indegree;
-    static List<Integer>[] w;
+    static List<Integer>[] w,rw;
     static int[]costs;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         num= Integer.parseInt(br.readLine());
         indegree= new int[num+1];
         w=new ArrayList[num+1];
+        rw=new ArrayList[num+1];
         costs=new int[num+1];
         for (int i = 1; i <= num; i++) {
             w[i] = new ArrayList<>();
