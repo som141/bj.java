@@ -29,7 +29,6 @@ public class MyP1 {
             private final Queue<String> queue;
         public printer1() {
             this.queue = new ConcurrentLinkedQueue<String>();
-
         }
 
         @Override
