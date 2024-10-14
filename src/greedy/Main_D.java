@@ -8,7 +8,7 @@ import java.util.*;
 public class Main_D {
     static int num, caseN;
     static List<graph>[] g;
-    static int[] d;
+    static long[] d;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -34,21 +34,21 @@ public class Main_D {
         int v1 = Integer.parseInt(st.nextToken());
         int v2 = Integer.parseInt(st.nextToken());
 
-        int route1 = dijkstra(1, v1) + dijkstra(v1, v2) + dijkstra(v2, num);
-        int route2 = dijkstra(1, v2) + dijkstra(v2, v1) + dijkstra(v1, num);
+        long route1 = dijkstra(1, v1) + dijkstra(v1, v2) + dijkstra(v2, num);
+        long route2 = dijkstra(1, v2) + dijkstra(v2, v1) + dijkstra(v1, num);
 
 
-        if (route1 >= Integer.MAX_VALUE && route2 >= Integer.MAX_VALUE) {
+        if (route1 >= Long.MAX_VALUE && route2 >= Long.MAX_VALUE) {
             System.out.println(-1);
         } else {
-            int result = Math.min(route1, route2);
-            System.out.println(result == Integer.MAX_VALUE ? -1 : result);
+            long result = Math.min(route1, route2);
+            System.out.println(result == Long.MAX_VALUE ? -1 : result);
         }
     }
 
-    static int dijkstra(int start, int end) {
-        d = new int[num + 1];
-        Arrays.fill(d, Integer.MAX_VALUE);
+    static long dijkstra(int start, int end) {
+        d = new long[num + 1];
+        Arrays.fill(d, Long.MAX_VALUE);
         d[start] = 0;
 
         PriorityQueue<graph> pq = new PriorityQueue<>();
@@ -64,7 +64,7 @@ public class Main_D {
             for (graph nextV : g[currentV.v]) {
                 if (d[currentV.v] + nextV.cost < d[nextV.v]) {
                     d[nextV.v] = d[currentV.v] + nextV.cost;
-                    pq.add(new graph(nextV.v, d[nextV.v]));
+                    pq.add(new graph(nextV.v, (int) d[nextV.v]));
                 }
             }
         }
@@ -73,7 +73,7 @@ public class Main_D {
     }
 
     static class graph implements Comparable<graph> {
-        int v, cost;
+        int v,cost;
 
         public graph(int v, int cost) {
             this.v = v;
