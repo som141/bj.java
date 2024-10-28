@@ -10,7 +10,7 @@ public class BoundMain{
     public static void main(String[] args) {
         BQ queue=new BQ1(2);
 //        ProducerFirst(queue);
-        ConsumerFirst(queue);
+//        ConsumerFirst(queue);
     }
     private static void ProducerFirst(BQ bq){
         log("생산자 먼저 실행"+bq.getClass().getSimpleName() +"==");
