@@ -8,7 +8,7 @@ import static Threads1.cas.util.logger.log;
 
 public class BoundMain{
     public static void main(String[] args) {
-        BQ queue=new BQ3(2);
+        BQ queue=new BQ4(2);
         ProducerFirst(queue);
 //        ConsumerFirst(queue);
     }
