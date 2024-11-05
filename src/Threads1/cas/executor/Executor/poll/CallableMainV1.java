@@ -8,7 +8,7 @@ import static Threads1.cas.util.logger.log;
 
 public class CallableMainV1 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        ExecutorService es = Executors.newFixedThreadPool(1);
+        ExecutorService es = Executors.newFixedThreadPool(1);//new ThreadPoolExecutor()이거를 1개의 쓰레드만 생성하는 메서드
         Future<Object> future = es.submit(new MyCallable());
         Integer result = (Integer) future.get();
         log("result: " + result);
