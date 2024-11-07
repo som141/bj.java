@@ -19,5 +19,19 @@ public abstract class Utills {
             log(executor);
         }
         }
+    public static void printState(ExecutorService executor,String taskName) {
+        if(executor instanceof ThreadPoolExecutor poolExecutor) {//인스턴스오브로 poolexecutor을 체크해서 거기 안에있는 메서드를 확정적으로 사용가능하게 함.
+            int pool=poolExecutor.getPoolSize();
+            int active =poolExecutor.getActiveCount();
+            int queuedTasks =poolExecutor.getQueue().size();
+            long completedTask =poolExecutor.getCompletedTaskCount();
+            log(taskName+": [pool=" + pool + ", active=" + active + ", queuedTasks=" +
+                    queuedTasks + ", completedTasks=" + completedTask + "]");
+        }
+        else {
+            log(executor);
+        }
     }
+    }
+
 
