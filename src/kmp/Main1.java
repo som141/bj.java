@@ -14,16 +14,27 @@ public class Main1 {
         s = br.readLine();
         patten = br.readLine();
         List<Integer> queue = kmpSerch(s,patten);
-//        for(int i:queue){
-//            System.out.print(i+1+ " ");
-//        }
+        System.out.println(queue.size());
+        for(int i:queue){
+            System.out.print(i+1+ " ");
+        }
 
     }
     public static List<Integer>kmpSerch(String s, String patten){
         List<Integer> result = new ArrayList<>();
         int []ff=failFuction(patten);
-        for(int i:ff){
-            System.out.println(i);
+        int j=0;
+        for(int i=0;i<s.length();i++){
+            while(j>0&&s.charAt(i)!=patten.charAt(j)){
+                j=ff[j-1];
+            }
+            if(s.charAt(i)==patten.charAt(j)){
+                j++;
+            }
+            if(j==patten.length()){
+                result.add(i-j+1);
+                j=ff[j-1];
+            }
         }
         return result;
     }
