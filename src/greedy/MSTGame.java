@@ -3,17 +3,13 @@ package greedy;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class MSTGame {
     static int node;
     static int edge;
     static int k;
-    static int u1;
-    static int v1;
+    static Queue<graph> q=new PriorityQueue<>();
     static List<graph>[] graphs;
 
 
@@ -45,7 +41,6 @@ public class MSTGame {
 
     private static int MstGame() {
         int result=0;
-        int count=0;
         PriorityQueue<graph> pq = new PriorityQueue<graph>();
         boolean[] visited=new boolean[node+1];
         pq.add(new graph(1,0));
@@ -56,6 +51,7 @@ public class MSTGame {
                 continue;
             }
             visited[current.v]=true;
+            q.add(current);
             result+=current.cost;
             for(graph g : graphs[current.v]){
                 if(!visited[g.v]){
