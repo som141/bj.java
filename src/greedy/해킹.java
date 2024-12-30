@@ -67,8 +67,8 @@ public class 해킹 {
             }
             visited[currentV] = true;
             for(node Next:g[currentV]){
-                if(result[Next.v] > currentC + Next.c) {
-                    result[Next.v] = currentC + Next.c;
+                if(result[Next.v] > result[currentV] + Next.c) {
+                    result[Next.v] = result[currentV] + Next.c;
                     pq.add(new node(Next.v, result[Next.v]));
                 }
 
