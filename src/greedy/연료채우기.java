@@ -26,7 +26,6 @@ public class 연료채우기 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         last = Integer.parseInt(st.nextToken());
         firstCost = Integer.parseInt(st.nextToken());
-
         Arrays.sort(list, Comparator.comparingInt(a -> a.distance));
 
         PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
