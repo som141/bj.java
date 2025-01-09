@@ -27,8 +27,9 @@ public class 그런사람은없었습니다 {
             if(b==0&&arrays[a].count<maxCount){
 
                 arrays[a].formflag=true;
+                arrays[a].flag=false;
                 for(int j=1;j<=num;j++){
-                    if(arrays[j].flag==true&&j!=a){
+                    if(arrays[j].flag==true&&j!=a&&arrays[j].formflag==false){
                         arrays[j].count++;
                     }
                 }
@@ -59,9 +60,6 @@ public class 그런사람은없었습니다 {
             count = 0;
             flag = false;
             formflag = false;
-        }
-        void flagChange(){
-            this.flag=true;
         }
 
     }
